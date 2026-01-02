@@ -14,10 +14,13 @@ return new class extends Migration
         Schema::create('pembiayaan_modal', function (Blueprint $table) {
             $table->id();
             $table->foreignId('umkm_id')->constrained('umkm')->onDelete('cascade');
-            $table->foreignId('mitra_id')->constrained('pengguna');
-            $table->decimal('jumlah_pinjaman', 15, 2);
-            $table->integer('tenor_bulan');
-            $table->enum('status', ['aktif','lunas','gagal'])->default('aktif');
+            $table->foreignId('mitra_id')->nullable()->constrained('pengguna');
+            $table->bigInteger('jumlah_pinjaman');
+            $table->date('tanggal_pinjam');
+            $table->date('tenggat_waktu');
+            $table->string('status_pelunasan');
+            $table->string('nama_bank')->nullable();
+            $table->string('nomor_rekening')->nullable();
             $table->timestamps();
         });        
     }

@@ -7,17 +7,33 @@ use Illuminate\Database\Eloquent\Model;
 class Umkm extends Model
 {
     protected $table = 'umkm';
-
-    protected $fillable = [
-        'pengguna_id',
-        'kategori_id',
-        'lokasi_id',
-        'nama_usaha',
-        'jangkauan_pasar',
-        'status_verifikasi'
+    protected $casts = [
+        'portfolio_produk' => 'array',
     ];
 
-    // ================= RELASI =================
+    protected $fillable = [
+        'pengguna_id', 
+        'nama_usaha', 
+        'no_whatsapp', 
+        'npwp', 
+        'alamat_usaha', 
+        'status_tempat', 
+        'luas_lahan', 
+        'kbli', 
+        'jumlah_karyawan', 
+        'kategori', 
+        'modal_usaha', 
+        'omzet_tahunan',
+        'limit_pinjaman', 
+        'saldo_pinjaman',
+        'kapasitas_produksi', 
+        'sistem_penjualan', 
+        'deskripsi', 
+        'status',
+        'nama_bank',
+        'nomor_rekening',
+        'portfolio_produk',
+    ];
 
     public function pengguna()
     {
@@ -39,7 +55,7 @@ class Umkm extends Model
         return $this->hasOne(LegalitasUmkm::class, 'umkm_id');
     }
 
-    public function pembiayaan()
+    public function PembiayaanModal()
     {
         return $this->hasMany(PembiayaanModal::class, 'umkm_id');
     }

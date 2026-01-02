@@ -14,11 +14,37 @@ return new class extends Migration
         Schema::create('umkm', function (Blueprint $table) {
             $table->id();
             $table->foreignId('pengguna_id')->constrained('pengguna')->onDelete('cascade');
-            $table->foreignId('kategori_umkm_id')->constrained('kategori_umkm')->onDelete('cascade');
-            $table->foreignId('lokasi_id')->constrained('lokasi')->onDelete('cascade');
             $table->string('nama_usaha');
-            $table->text('deskripsi'); 
-            $table->enum('status', ['aktif', 'tidak aktif'])->default('aktif');
+            $table->string('no_whatsapp')->nullable();
+            $table->string('npwp')->nullable();
+            $table->text('alamat_usaha')->nullable();
+            $table->string('status_tempat')->nullable();
+            $table->decimal('luas_lahan', 8, 2)->nullable();
+            $table->string('kbli', 5)->nullable();
+            $table->integer('jumlah_karyawan')->default(0);
+            $table->bigInteger('modal_usaha')->default(0);
+            $table->enum('kategori', ['mikro', 'kecil', 'menengah'])->default('mikro'); // Otomatis ditentukan sistem
+            $table->bigInteger('omzet_tahunan')->default(0);
+            $table->string('kapasitas_produksi')->nullable();
+            $table->enum('sistem_penjualan', ['luring', 'daring', 'keduanya'])->default('luring');
+            $table->bigInteger('limit_pinjaman')->default(0); // Batas maksimal dana bantuan
+            $table->bigInteger('saldo_pinjaman')->default(0); // Dana yang sedang dipinjam saat ini
+            $table->string('nama_bank')->nullable(); //
+            $table->string('nomor_rekening')->nullable();
+            $table->text('deskripsi');
+            $table->json('portfolio_produk')->nullable();
+            $table->enum('status', ['pending', 'aktif', 'ditolak'])->default('pending');
+            $table->timestamps();
+        });
+
+        // Tambahkan Tabel Pinjaman untuk mencatat riwayat cicilan/paylater
+        Schema::create('pinjaman_modal', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('umkm_id')->constrained('umkm')->onDelete('cascade');
+            $table->bigInteger('jumlah_pinjam');
+            $table->date('tanggal_pinjam');
+            $table->date('tenggat_waktu');
+            $table->enum('status_pembayaran', ['belum_lunas', 'lunas', 'telat'])->default('belum_lunas');
             $table->timestamps();
         });
     }

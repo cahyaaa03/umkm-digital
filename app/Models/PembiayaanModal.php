@@ -2,18 +2,22 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class PembiayaanModal extends Model
 {
+    use HasFactory;
+    public $timestamps = true;
     protected $table = 'pembiayaan_modal';
 
     protected $fillable = [
         'umkm_id',
         'mitra_id',
         'jumlah_pinjaman',
-        'tenor_bulan',
-        'status'
+        'tanggal_pinjam', 
+        'tenggat_waktu', 
+        'status_pelunasan'
     ];
 
     

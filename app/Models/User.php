@@ -12,6 +12,7 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
+    protected $table = 'pengguna';
     /**
      * The attributes that are mass assignable.
      *
@@ -21,6 +22,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'nik',
     ];
 
     /**
@@ -44,5 +47,9 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+    public function umkm()
+    {
+        return $this->hasOne(Umkm::class, 'pengguna_id'); 
     }
 }
